@@ -140,6 +140,45 @@ namespace Data
 
             return checkStudentID.FirstOrDefault();
         }
+        public double GetTotalAttandance(int StudentID)
+        {
+            var TotalAttandance = from S in db.StudentAttendances
+                                 where S.StudentID == StudentID
+                                 select S;
+            return TotalAttandance.Count()+.0;
+        }
+        public double GetTotalAttandancePres(int StudentID)
+        {
+            var TotalAttandancePresent = from S in db.StudentAttendances
+                                         where S.StudentID == StudentID && S.Presence == true
+                                         select S;
+
+            return TotalAttandancePresent.Count()+.0;
+        }
+        public List<StudentAttendance> GetStudentPersantage(int id)
+        {
+            List<StudentAttendance> s = new List<StudentAttendance>
+                                      (from S in db.StudentAttendances
+                                       where S.StudentID == id
+                                       select S);
+            return s;
+        }
+        public List<Student> GetStudentGroup(int id)
+        {
+            List<Student> s = new List<Student>
+                                      (from S in db.Students
+                                       where S.GroupID == id
+                                       select S);
+            return s;
+        }
+        public int ExistingUName(string username)
+        {
+            List<Teacher> s = new List<Teacher>
+                                      (from S in db.Teachers
+                                       where S.Username == username
+                                       select S);
+            return s.Count();
+        }
 
     }
 }

@@ -36,7 +36,7 @@ namespace Business
             if (dl.Password(username, password) != null)
             {
                 id.ID = dl.Password(username, password).TeacherID;
-                return "Logged in";
+                return "\nLogged in";
             }
 
             return "Re enter cridentials please!";
@@ -92,6 +92,10 @@ namespace Business
         {
             dl.addStudent(Name, Surname, Email, GroupID);
         }
+        public void AddTeacher(string pUsername, string pPassword, string pName, string pSurname, string pEmail)
+        {
+            dl.addTeacher(pUsername,pPassword,pName,pSurname,pEmail);
+        }
         public void EditStudent(int id, string Name, string Surname, string Email)
         {
             dl.EditStudent(id, Name, Surname, Email);
@@ -116,6 +120,32 @@ namespace Business
                 result += "\n" + s.StudentID + "    " + s.Name + "              " + s.Surname + "              " + s.Email;
             }
             return result;
+        }
+        public string GetAttandance(int id)
+        {
+            string result = "";
+            foreach (StudentAttendance sa in dl.GetStudentPersantage(id))
+            {
+                result += "\n" +sa.StudentID+ "\t\t" + sa.Presence+ "\t\t" + sa.LessonID;
+            }
+            return result;
+        }
+        public string AttandancePersentage(int id)
+        {
+            double t = dl.GetTotalAttandance(id);
+            double p = dl.GetTotalAttandancePres(id);
+            double TPD = 100 / (t/p);
+            
+            return $"Student attendance percentage is: {Math.Round(TPD,2)}%\n";
+        }
+        public int GetNumOfStudents(int id)
+        {
+            int count = dl.GetStudentGroup(id).Count();
+            return count;
+        }
+        public int EsitingUName(string uname)
+        {
+            return dl.ExistingUName(uname);
         }
     }
 }

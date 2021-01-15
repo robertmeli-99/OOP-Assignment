@@ -19,6 +19,9 @@ namespace Domain
     }
     public partial class StudentAttendance
     {
+        public StudentAttendance()
+        {
+        }
         public StudentAttendance(int pLessonID, bool pPresence, int pStudentID)
         {
             LessonID = pLessonID;
